@@ -52,7 +52,22 @@ document.addEventListener('DOMContentLoaded', () => {
             // Write the modified HTML to the iframe
             const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
             iframeDocument.open();
-            iframeDocument.write(data.content);
+            
+            // Add Google Fonts and custom styles to the iframe
+            const fontStyles = `
+                <link rel="preconnect" href="https://fonts.googleapis.com">
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                <link href="https://fonts.googleapis.com/css2?family=Nabla&display=swap" rel="stylesheet">
+                <style>
+                    a[href] {
+                        font-family: 'Nabla', system-ui;
+                    }
+                </style>
+            `;
+            
+            // Insert the font styles at the beginning of the head section
+            const modifiedContent = data.content.replace('</head>', `${fontStyles}</head>`);
+            iframeDocument.write(modifiedContent);
             iframeDocument.close();
             
             // Adjust iframe height to match content

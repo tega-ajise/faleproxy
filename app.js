@@ -20,17 +20,11 @@ app.get('/', (req, res) => {
 function replaceYaleWithFale(text) {
   if (!text) return text;
   
-  // First check if there are any Yale references (case-insensitive)
-  if (!text.match(/yale/i)) {
-    return text;
-  }
+  // Replace Yale with Fale, then yale with fale
+  const newText = text.replace(/Yale/g, 'Fale').replace(/yale/g, 'fale');
   
-  // Case-insensitive replacement that preserves case
-  return text.replace(/Yale/gi, function(match) {
-    if (match === match.toUpperCase()) return 'FALE';
-    if (match === match.toLowerCase()) return 'fale';
-    return 'Fale';
-  });
+  // Only return modified text if changes were made
+  return newText === text ? text : newText;
 }
 
 // API endpoint to fetch and modify content
